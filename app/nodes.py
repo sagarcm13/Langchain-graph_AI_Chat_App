@@ -11,7 +11,6 @@ llm = GeminiChat()
 # -------------------------
 def intent_node(state: AgentState) -> AgentState:
     result = detect_intent(state["user_input"])
-    print("🧠 Detected:", result)
 
     return {
         "intent": result["intent"],

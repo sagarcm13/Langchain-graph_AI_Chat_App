@@ -1,0 +1,13 @@
+# Core LangChain & Graph
+langchain>=0.2.0
+langchain-core>=0.2.0
+langchain-community>=0.2.0
+langgraph>=0.0.40
+
+# Gemini (NEW SDK - NOT deprecated)
+google-genai>=0.3.0
+
+# Environment variables
+python-dotenv>=1.0.1
+
+requests>=2.32.0

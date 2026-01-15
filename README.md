@@ -56,6 +56,43 @@ WEATHER_API_KEY=your_openweathermap_api_key_here
 python main.py
 ```
 
+
+
+## Flow Diagram
+
+<details>
+<summary><strong>Click to expand flow diagram</strong></summary>
+
+```mermaid
+flowchart TD
+  Start(["User Input\n<small>(main.py)</small>"])
+  Intent{{"Intent Detection\n<small>(intent.py)</small>"}}
+  Weather["Weather Handler\n<small>(weather.py)</small>"]
+  Chat["Chat Handler\n<small>(llm.py)</small>"]
+  Resp(["AI Response\n<small>(main.py)</small>"])
+
+  Start --> Intent
+  Intent -- "intent = weather" --> Weather
+  Intent -- "intent = general" --> Chat
+  Weather --> Resp
+  Chat --> Resp
+
+  %% Optional: Add user exit path
+  Start -.->|"Type 'exit'"| End(["Exit"])
+```
+
+<br/>
+<strong>Flow Description:</strong>
+
+1. <strong>User Input</strong>: User types a message in the terminal (main.py).
+2. <strong>Intent Detection</strong>: The message is analyzed to determine if it's a weather query or general chat (intent.py).
+3. <strong>Weather Handler</strong>: If weather intent, fetches weather info for the city (weather.py).
+4. <strong>Chat Handler</strong>: If general intent, responds using Gemini LLM (llm.py).
+5. <strong>AI Response</strong>: The response is printed to the user.
+6. <strong>Exit</strong>: User can type 'exit' to quit at any time.
+
+</details>
+
 ## Usage
 - Type any message to chat with the AI.
 - Ask about the weather in any city (e.g., "What's the weather in Paris?").

@@ -1,4 +1,4 @@
-# ChatBotAppWithWeatherAPI
+# AI Chat App
 
 A conversational AI chatbot powered by Google Gemini and LangChain, with integrated weather information via OpenWeatherMap API and RAG (Retrieval-Augmented Generation) capabilities.
 

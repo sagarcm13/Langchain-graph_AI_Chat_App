@@ -3,19 +3,25 @@ from app.llm import GeminiChat
 from app.state import AgentState
 from app.intent import detect_intent
 from app.weather import get_weather
+from app.rag.retriever import get_relevant_context
 
 llm = GeminiChat()
 
 # -------------------------
 # Intent Node
 # -------------------------
-def intent_node(state: AgentState) -> AgentState:
-    result = detect_intent(state["user_input"])
+def intent_node(state):
+    query = state["user_input"]
+    print("🧭 Detecting intent...")
 
-    return {
-        "intent": result["intent"],
-        "city": result["city"]
-    }
+    result = detect_intent(query)
+
+    state["intent"] = result.get("intent")
+    state["city"] = result.get("city")
+
+    print("🎯 Intent:", state["intent"], "| City:", state["city"])
+    return state
+
 
 # -------------------------
 # Weather Node
@@ -50,8 +56,39 @@ def weather_node(state: AgentState) -> AgentState:
 # -------------------------
 # Chat Node
 # -------------------------
+# -------------------------
+# Chat Node
+# -------------------------
 def chat_node(state: AgentState) -> AgentState:
-    result = llm.invoke([
-        HumanMessage(content=state["user_input"])
-    ])
+    user_text = state["user_input"]
+    context = state.get("rag_context")
+
+    # If RAG context exists, inject it
+    if context:
+        prompt = f"""
+You are an assistant answering based on the user's personal profile.
+
+Context:
+{context}
+
+User Question:
+{user_text}
+"""
+        result = llm.invoke([
+            HumanMessage(content=prompt)
+        ])
+    else:
+        result = llm.invoke([
+            HumanMessage(content=user_text)
+        ])
+
     return {"response": result.content}
+
+def rag_node(state):
+    print("🧠 Fetching personal context from RAG...")
+    query = state["user_input"]
+
+    context = get_relevant_context(query)
+
+    state["rag_context"] = context
+    return state

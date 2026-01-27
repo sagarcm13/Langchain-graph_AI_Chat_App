@@ -1,4 +1,34 @@
-app/__pycache__/
-AIenv
+# Virtual Environment
+AIenv/
+
+# Environment variables
 .env
+.env.local
+
+# Python cache files
+__pycache__/
+app/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+
+# Database files
+*.sqlite3
+vector_db/chroma/
+
+# IDE settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Local data (optional - uncomment if needed)
+data/
 

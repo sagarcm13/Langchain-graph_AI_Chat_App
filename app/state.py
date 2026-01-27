@@ -5,3 +5,4 @@ class AgentState(TypedDict):
     intent: Optional[str]
     city: Optional[str]
     response: Optional[str]
+    rag_context: Optional[str]
